@@ -3,28 +3,29 @@ name: Deploy to Network Solutions
 on:
   push:
     branches:
-      - main  # Deploy when pushing to main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+    - name: Remove files not needed on server
+      run: |
+        rm -rf ".git" ".github" ".claude" "Jim's Assets" node_modules
+        rm -f README.md CLAUDE.md .gitignore
+
+    - name: SFTP Deploy
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
         server: ${{ secrets.FTP_SERVER }}
+        port: 22
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          README.md
-          CLAUDE.md
-          **/.claude/**
-          **/Jim's Assets/**
+        local_path: './*'
+        remote_path: '/'
+        sftpArgs: '-o StrictHostKeyChecking=no'
+        delete_remote_files: false
