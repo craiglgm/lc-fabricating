@@ -3,7 +3,17 @@
     "allow": [
       "WebFetch(domain:lcfabricating.crd.co)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd GitHub Actions FTP deploy workflow and Claude settings\n\nSet up automatic deployment to Network Solutions via FTP on push to main.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd GitHub Actions FTP deploy workflow and Claude settings\n\nSet up automatic deployment to Network Solutions via FTP on push to main.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nSwitch deploy to SFTP for Network Solutions compatibility\n\nNetwork Solutions uses SFTP, not FTP. Replaced SamKirkland FTP action\nwith wlixcc SFTP-Deploy-Action and added a cleanup step to exclude\ndev files from the upload.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nSwitch to lftp for SFTP deploy \\(pure SFTP, no shell exec needed\\)\n\nNetwork Solutions blocks SSH exec commands. lftp uses the SFTP\nsubsystem directly for file transfers without needing shell access.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nDebug: list remote SFTP directory to find web root path\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(cmd /c \"pip install pymupdf -q 2>&1 && python -c \"\"import fitz; doc = fitz.open\\(r''c:\\\\Users\\\\craig\\\\Projects\\\\lc-fabricating\\\\Jim''''s Assets\\\\Outdoor Living Solutions - LC Fabricating Inc.pdf''\\); [print\\(f''--- Page {i+1} ---\\\\n'' + page.get_text\\(\\)\\) for i, page in enumerate\\(doc\\)]\"\" 2>&1\")",
+      "Bash(powershell -Command \"pip install pymupdf -q; python -c ''import fitz; doc = fitz.open\\(r\"\"c:\\\\Users\\\\craig\\\\Projects\\\\lc-fabricating\\\\Jim''\\\\''''s Assets\\\\Outdoor Living Solutions - LC Fabricating Inc.pdf\"\"\\); [print\\(f\"\"--- Page {i+1} ---\\\\n\"\" + page.get_text\\(\\)\\) for i, page in enumerate\\(doc\\)]''\")",
+      "Bash(powershell -Command:*)"
     ]
   }
 }
